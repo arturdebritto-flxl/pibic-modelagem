@@ -2,10 +2,10 @@ import duckdb
 
 ARQUIVO = 'dados/brutos/COTAHIST_A2010.TXT'
 
-con = duckdb.connect()
+con = duckdb.connect("dados/pibic.duckdb")
 
 con.sql(f"""
-    CREATE TABLE bruto AS
+    CREATE OR REPLACE TABLE bruto AS
     SELECT linha
     FROM read_csv('{ARQUIVO}',
         columns = {{'linha': 'VARCHAR'}},
@@ -34,7 +34,7 @@ con.sql("""
 """).show()
 
 con.sql("""
-    CREATE TABLE cotacoes AS
+    CREATE OR REPLACE TABLE cotacoes AS
     SELECT
         CAST(strptime(substr(linha, 3, 8), '%Y%m%d') AS DATE) AS data,
         substr(linha, 11, 2)                            AS codbdi,
