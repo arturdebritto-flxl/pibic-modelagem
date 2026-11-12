@@ -1,0 +1,13 @@
+[project]
+name = "pibic-modelagem"
+version = "0.1.0"
+description = "PIBIC UnB - modelagem preditiva e prescritiva com IA para o mercado de capitais brasileiro"
+readme = "README.md"
+authors = [
+    { name = "Artur de Britto", email = "243407894+arturdebritto-flxl@users.noreply.github.com" }
+]
+requires-python = ">=3.15"
+dependencies = [
+    "duckdb>=2.0.0",
+    "pandas>=3.1.1",
+]
