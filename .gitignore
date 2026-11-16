@@ -11,3 +11,6 @@ wheels/
 .idea/
 dados/brutos/
 *.duckdb
+AGENTS.md
+CLAUDE.md
+.agentes/
