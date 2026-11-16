@@ -4,11 +4,22 @@ con = duckdb.connect("dados/pibic.duckdb")
 
 TIPOS_ACAO = "('ON', 'PN', 'PNA', 'PNB', 'PNC', 'PND', 'PNE', 'PNF', 'UNT')"
 
-# Tabela de ações (D16)
+# Tabela de ações (D16) + preços zerados (opção B)
 con.sql(f"""
     CREATE OR REPLACE TABLE acoes AS
     WITH base AS (
-        SELECT *,
+        SELECT * REPLACE (
+                   CASE WHEN fechamento > 0 THEN fechamento
+                        WHEN negocios = 1 AND medio > 0 THEN medio END AS fechamento,
+                   CASE WHEN abertura > 0 THEN abertura
+                        WHEN negocios = 1 AND medio > 0 THEN medio END AS abertura,
+                   CASE WHEN maximo > 0 THEN maximo
+                        WHEN negocios = 1 AND medio > 0 THEN medio END AS maximo,
+                   CASE WHEN minimo > 0 THEN minimo
+                        WHEN negocios = 1 AND medio > 0 THEN medio END AS minimo
+               ),
+               (fechamento <= 0 OR abertura <= 0 OR maximo <= 0 OR minimo <= 0)
+                                                           AS preco_zero_original,
                replace(split_part(especi, ' ', 1), '*', '') AS tipo,
                trim(substr(especi, 5, 3))                  AS marca
         FROM cotacoes
@@ -35,12 +46,13 @@ con.sql(f"""
 
 # Checagem 2: marcações
 con.sql("""
-    SELECT count(*)                                   AS linhas,
-           count(DISTINCT ticker)                     AS tickers,
-           count(*) FILTER (WHERE eh_unit)            AS linhas_unit,
-           count(*) FILTER (WHERE classe_temporaria)  AS linhas_temporarias,
-           count(*) FILTER (WHERE mudou_fatcot)       AS mudancas_fator,
-           count(*) FILTER (WHERE fatcot <> 1)        AS fator_dif_1
+    SELECT count(*)                                    AS linhas,
+           count(DISTINCT ticker)                      AS tickers,
+           count(*) FILTER (WHERE eh_unit)             AS linhas_unit,
+           count(*) FILTER (WHERE classe_temporaria)   AS linhas_temporarias,
+           count(*) FILTER (WHERE mudou_fatcot)        AS mudancas_fator,
+           count(*) FILTER (WHERE fatcot <> 1)         AS fator_dif_1,
+           count(*) FILTER (WHERE preco_zero_original) AS precos_zero
     FROM acoes
 """).show()
 
@@ -51,7 +63,8 @@ con.sql("""
             SELECT ticker, data FROM acoes
             GROUP BY ticker, data
             HAVING count(*) > 1)) AS duplicatas,
-        count(*) FILTER (WHERE fechamento <= 0) AS fechamento_zero,
-        count(*) FILTER (WHERE quantidade = 0)  AS sem_quantidade
+        count(*) FILTER (WHERE fechamento <= 0)    AS fechamento_zero,
+        count(*) FILTER (WHERE fechamento IS NULL) AS fechamento_vazio,
+        count(*) FILTER (WHERE quantidade = 0)     AS sem_quantidade
     FROM acoes
 """).show()
