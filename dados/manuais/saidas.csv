@@ -1,116 +1,116 @@
-ticker,ultimo_pregao,ultimo_preco,tipo,sucessor,relacao_troca,valor_dinheiro,data_efeito,fonte,evidencia_automatica,verificado
-ALLL11,2010-10-21,16.5,conversao_classe,ALLL3,,,,,"C1: ALLL3 (a, razao_preco=0.9576)",falso
-AEDU11,2010-12-03,37.35,troca_codigo,AEDU3,,,,,"C1: AEDU3 (ab:nome, razao_preco=0.9909)",falso
-ELPL6,2010-12-20,30.2,troca_codigo,ELPL4,,,,,"C1: ELPL3 (a, razao_preco=1.0808); ELPL4 (ab:nome, razao_preco=1.0195) | C2: CNPJ 61.695.227/0001-93 (via B3), ATIVO | C3: 10 documentos",falso
-PCAR5,2011-03-31,67.12,troca_codigo,PCAR4,,,,,"C1: PCAR3 (a, razao_preco=1.0954); PCAR4 (ab:nome, razao_preco=1.028) | C2: CNPJ 47.508.411/0001-56 (via B3), ATIVO | C3: 3 documentos",falso
-VIVO4,2011-06-07,71.8,incorporacao,,,,,,"C2: CNPJ 02.558.074/0001-73 (via B3), CANCELADA em 2011-10-03, motivo: ELISÃO POR INCORPORAÇÃO | C3: 9 documentos",falso
-TCSL3,2011-08-02,9.35,troca_codigo,TIMP3,,,,,"C1: TIMP3 (b:nome, razao_preco=0.9626)",falso
-TCSL4,2011-08-02,7.82,troca_codigo,TIMP3,,,,,"C1: TIMP3 (b:nome, razao_preco=1.1509)",falso
-UGPA4,2011-08-16,27.1,conversao_classe,UGPA3,,,,,"C1: UGPA3 (a, razao_preco=1.0221) | C2: CNPJ 33.256.439/0001-39 (via B3), ATIVO | C3: 5 documentos",falso
-TLPP4,2011-10-05,46.55,indeterminado,,,,,,"",falso
-ECOD3,2011-10-11,0.58,indeterminado,,,,,,"",falso
-DROG3,2011-12-16,13.35,indeterminado,,,,,,"",falso
-FFTL4,2011-12-23,25.06,indeterminado,,,,,,"C2: CNPJ 19.443.985/0001-58 (via B3), CANCELADA em 2011-12-23, motivo: CANCELAMENTO VOLUNTÁRIO | C3: 5 documentos",falso
-BRTO4,2012-04-05,9.56,indeterminado,,,,,,"",falso
-TMAR5,2012-04-05,42.67,indeterminado,,,,,,"",falso
-TNLP3,2012-04-05,27.75,incorporacao,,,,,,"C2: CNPJ 02.558.134/0001-58 (via B3), CANCELADA em 2012-02-27, motivo: ELISÃO POR INCORPORAÇÃO | C3: 5 documentos",falso
-TNLP4,2012-04-05,20.36,incorporacao,,,,,,"C2: CNPJ 02.558.134/0001-58 (via B3), CANCELADA em 2012-02-27, motivo: ELISÃO POR INCORPORAÇÃO | C3: 5 documentos",falso
-TAMM4,2012-07-18,52.73,indeterminado,,,,,,"C2: CNPJ 01.832.635/0001-18 (via B3), CANCELADA em 2012-07-18, motivo: CANCELAMENTO VOLUNTÁRIO | C3: 9 documentos",falso
-RDCD3,2012-10-17,35.16,indeterminado,,,,,,"",falso
-KROT11,2012-12-04,40.0,conversao_classe,KROT3,,,,,"C1: KROT3 (a, razao_preco=1.0225)",falso
-OHLB3,2012-12-21,18.85,indeterminado,,,,,,"",falso
-AMIL3,2013-05-08,32.2,indeterminado,,,,,,"C2: CNPJ 36.461.242/0001-20 (via B3), CANCELADA em 2013-05-09, motivo: CANCELAMENTO VOLUNTÁRIO | C3: 7 documentos",falso
-MPXE3,2013-10-21,4.7,troca_codigo,ENEV3,,,,,"C1: ENEV3 (b:nome, razao_preco=1.0106)",falso
-AMBV3,2013-11-08,87.0,indeterminado,,,,,,"C2: CNPJ 02.808.708/0001-07 (via B3), CANCELADA em 2013-12-12, motivo: CANCELAMENTO VOLUNTÁRIO | C3: 6 documentos",falso
-AMBV4,2013-11-08,86.8,indeterminado,,,,,,"C2: CNPJ 02.808.708/0001-07 (via B3), CANCELADA em 2013-12-12, motivo: CANCELAMENTO VOLUNTÁRIO | C3: 6 documentos",falso
-LLXL3,2014-04-03,1.06,indeterminado,,,,,,"",falso
-AEDU3,2014-07-03,18.35,indeterminado,,,,,,"",falso
-BISA3,2015-01-02,1.58,indeterminado,,,,,,"",falso
-NETC4,2015-01-27,40.0,incorporacao,,,,,,"C2: CNPJ 00.108.786/0001-65 (via B3), CANCELADA em 2014-12-31, motivo: ELISÃO POR INCORPORAÇÃO | C3: 6 documentos",falso
-IMCH3,2015-03-30,6.39,incorporacao,,,,,,"C2: CNPJ 08.936.792/0001-12 (via B3), CANCELADA em 2014-12-01, motivo: ELISÃO POR INCORPORAÇÃO | C3: 6 documentos",falso
-ALLL3,2015-03-31,3.97,indeterminado,,,,,,"",falso
-HRTP3,2015-06-25,4.25,indeterminado,,,,,,"",falso
-CRUZ3,2015-11-30,27.59,indeterminado,,,,,,"C2: CNPJ 33.009.911/0001-39 (via B3), CANCELADA em 2015-12-01, motivo: CANCELAMENTO VOLUNTÁRIO | C3: 12 documentos",falso
-GETI3,2015-12-30,14.45,incorporacao,,,,,,"C2: CNPJ 02.998.609/0001-27 (via B3), CANCELADA em 2015-12-31, motivo: ELISÃO POR INCORPORAÇÃO | C3: 11 documentos",falso
-GETI4,2015-12-30,14.46,incorporacao,,,,,,"C2: CNPJ 02.998.609/0001-27 (via B3), CANCELADA em 2015-12-31, motivo: ELISÃO POR INCORPORAÇÃO | C3: 11 documentos",falso
-ARTR3,2016-06-16,10.01,indeterminado,,,,,,"",falso
-TBLE3,2016-07-20,41.39,indeterminado,,,,,,"",falso
-STBP11,2016-08-19,14.4,troca_codigo,STBP3,,,,,"C1: STBP3 (ab:nome, razao_preco=0.1917) | C2: CNPJ 02.762.121/0001-04 (via FCA), ATIVO | C3: 5 documentos",falso
-VAGR3,2016-11-04,13.0,indeterminado,,,,,,"",falso
-RUMO3,2017-03-10,8.41,incorporacao,,,,,,"C2: CNPJ 71.550.388/0001-42 (via B3), CANCELADA em 2016-12-19, motivo: ELISÃO POR INCORPORAÇÃO | C3: 3 documentos",falso
-CTIP3,2017-03-29,49.5,incorporacao,,,,,,"C2: CNPJ 09.358.105/0001-91 (via B3), CANCELADA em 2017-07-03, motivo: ELISÃO POR INCORPORAÇÃO | C3: 15 documentos",falso
-BBTG11,2017-08-18,15.01,conversao_classe,BBTG12,,,,,"C1: BBTG12 (a, razao_preco=0.0353)",falso
-SMLE3,2017-10-20,92.82,troca_codigo,SMLS3,,,,,"C1: SMLS3 (b:nome, razao_preco=0.9804) | C2: CNPJ 15.912.764/0001-20 (via B3), CANCELADA em 2017-07-01, motivo: ELISÃO POR INCORPORAÇÃO | C3: 9 documentos",falso
-SUZB5,2017-11-09,21.13,conversao_classe,SUZB3,,,,,"C1: SUZB3 (a, razao_preco=0.973) | C2: CNPJ 16.404.287/0001-55 (via B3), ATIVO | C3: 8 documentos",falso
-ELPL4,2017-11-24,15.98,conversao_classe,ELPL3,,,,,"C1: ELPL3 (a, razao_preco=1.0075) | C2: CNPJ 61.695.227/0001-93 (via B3), ATIVO | C3: 19 documentos",falso
-VALE5,2017-11-24,33.36,conversao_classe,VALE3,,,,,"C1: VALE3 (a, razao_preco=1.0615) | C2: CNPJ 33.592.510/0001-54 (via B3), ATIVO | C3: 20 documentos",falso
-BVMF3,2018-03-23,25.43,troca_codigo,B3SA3,,,,,"C1: B3SA3 (b:nome, razao_preco=1.009) | C2: CNPJ 09.346.601/0001-25 (via FCA), ATIVO | C3: 10 documentos",falso
-VVAR11,2018-11-23,14.58,conversao_classe,VVAR3,,,,,"C1: VVAR3 (a, razao_preco=0.3395) | C2: CNPJ 33.041.260/0652-90 (via FCA), ATIVO | C3: 13 documentos",falso
-FIBR3,2019-01-03,66.3,incorporacao,,,,,,"C2: CNPJ 60.643.228/0001-21 (via FCA), CANCELADA em 2019-04-01, motivo: ELISÃO POR INCORPORAÇÃO | C3: 13 documentos",falso
-OGXP3,2019-01-10,1.63,indeterminado,,,,,,"C2: CNPJ 07.957.093/0001-96 (via FCA), CANCELADA em 2019-03-12, motivo: CANCELAMENTO VOLUNTÁRIO | C3: 7 documentos",falso
-MPLU3,2019-04-22,26.8,indeterminado,,,,,,"C2: CNPJ 11.094.546/0001-75 (via FCA), CANCELADA em 2019-05-06, motivo: CANCELAMENTO VOLUNTÁRIO | C3: 10 documentos",falso
-QGEP3,2019-04-23,14.54,indeterminado,,,,,,"C2: CNPJ 11.669.021/0001-10 (via FCA), CANCELADA em 2024-11-01, motivo: ELISÃO POR INCORPORAÇÃO | C3: 7 documentos",falso
-BPHA3,2019-06-10,0.62,indeterminado,,,,,,"C2: CNPJ 11.395.624/0001-71 (via FCA), ATIVO | C3: 11 documentos",falso
-ESTC3,2019-07-22,33.52,indeterminado,,,,,,"C2: CNPJ 08.807.432/0001-10 (via FCA), ATIVO | C3: 2 documentos",falso
-ALSC3,2019-08-05,27.75,incorporacao,,,,,,"C2: CNPJ 06.082.980/0001-03 (via FCA), CANCELADA em 2019-08-05, motivo: ELISÃO POR INCORPORAÇÃO | C3: 10 documentos",falso
-KROT3,2019-10-10,10.38,indeterminado,,,,,,"",falso
-ELPL3,2019-11-26,49.32,indeterminado,,,,,,"C2: CNPJ 61.695.227/0001-93 (via FCA), ATIVO | C3: 10 documentos",falso
-PCAR4,2020-02-28,72.11,conversao_classe,PCAR3,,,,,"C1: PCAR3 (a, razao_preco=1.0225) | C2: CNPJ 47.508.411/0001-56 (via FCA), ATIVO | C3: 24 documentos",falso
-TIMP3,2020-10-09,13.46,indeterminado,,,,,,"C2: CNPJ 02.558.115/0001-21 (via FCA), CANCELADA em 2020-08-31, motivo: ELISÃO POR EXTINÇÃO DA CIA | C3: 18 documentos",falso
-VIVT4,2020-11-20,45.34,conversao_classe,VIVT3,,,,,"C1: VIVT3 (a, razao_preco=0.9755) | C2: CNPJ 02.558.157/0001-62 (via FCA), ATIVO | C3: 20 documentos",falso
-TIET11,2021-03-26,17.44,incorporacao,,,,,,"C2: CNPJ 04.128.563/0001-10 (via FCA), CANCELADA em 2021-05-13, motivo: ELISÃO POR INCORPORAÇÃO | C3: 20 documentos",falso
-CNTO3,2021-03-30,28.08,indeterminado,,,,,,"C2: CNPJ 13.217.485/0001-11 (via FCA), ATIVO | C3: 7 documentos",falso
-MMXM3,2021-05-19,14.0,indeterminado,,,,,,"C2: CNPJ 02.762.115/0001-49 (via FCA), CANCELADA em 2024-09-24, motivo: CANCELAMENTO DE OFÍCIO | C3: 16 documentos",falso
-SMLS3,2021-06-04,22.4,incorporacao,,,,,,"C2: CNPJ 05.730.375/0001-20 (via FCA), CANCELADA em 2021-09-01, motivo: ELISÃO POR INCORPORAÇÃO | C3: 19 documentos",falso
-LINX3,2021-06-25,37.4,indeterminado,,,,,,"C2: CNPJ 06.948.969/0001-75 (via FCA), CANCELADA em 2021-08-02, motivo: CANCELAMENTO VOLUNTÁRIO | C3: 18 documentos",falso
-BTOW3,2021-07-16,68.0,indeterminado,,,,,,"C2: CNPJ 00.776.574/0001-56 (via FCA), ATIVO | C3: 17 documentos",falso
-VVAR3,2021-08-13,11.3,indeterminado,,,,,,"C2: CNPJ 33.041.260/0652-90 (via FCA), ATIVO | C3: 5 documentos",falso
-DTEX3,2021-08-18,20.63,indeterminado,,,,,,"C2: CNPJ 97.837.181/0001-47 (via FCA), ATIVO | C3: 3 documentos",falso
-HGTX3,2021-09-17,37.5,indeterminado,,,,,,"C2: CNPJ 78.876.950/0001-71 (via FCA), CANCELADA em 2022-02-23, motivo: CANCELAMENTO VOLUNTÁRIO | C3: 12 documentos",falso
-BRDT3,2021-10-21,22.03,indeterminado,,,,,,"C2: CNPJ 34.274.233/0001-02 (via FCA), ATIVO | C3: 23 documentos",falso
-IGTA3,2021-11-19,33.13,indeterminado,,,,,,"C2: CNPJ 51.218.147/0001-93 (via FCA), ATIVO | C3: 9 documentos",falso
-LAME3,2022-01-21,6.62,incorporacao,,,,,,"C2: CNPJ 33.014.556/0001-96 (via FCA), CANCELADA em 2021-12-10, motivo: ELISÃO POR INCORPORAÇÃO | C3: 10 documentos",falso
-LAME4,2022-01-21,6.55,incorporacao,,,,,,"C2: CNPJ 33.014.556/0001-96 (via FCA), CANCELADA em 2021-12-10, motivo: ELISÃO POR INCORPORAÇÃO | C3: 10 documentos",falso
-GNDI3,2022-02-11,66.95,indeterminado,,,,,,"C2: CNPJ 19.853.511/0001-84 (via FCA), CANCELADA em 2022-03-18, motivo: CANCELAMENTO VOLUNTÁRIO | C3: 12 documentos",falso
-CESP6,2022-03-25,25.25,indeterminado,,,,,,"C2: CNPJ 60.933.603/0001-78 (via FCA), ATIVO | C3: 17 documentos",falso
-BBRK3,2022-05-17,0.8,indeterminado,,,,,,"C2: CNPJ 08.613.550/0001-98 (via FCA), ATIVO | C3: 11 documentos",falso
-BIDI11,2022-06-17,10.4,indeterminado,,,,,,"C2: CNPJ 00.416.968/0001-01 (via FCA), CANCELADA em 2022-12-02, motivo: CANCELAMENTO VOLUNTÁRIO | C3: 16 documentos",falso
-BIDI4,2022-06-17,3.41,indeterminado,,,,,,"C2: CNPJ 00.416.968/0001-01 (via FCA), CANCELADA em 2022-12-02, motivo: CANCELAMENTO VOLUNTÁRIO | C3: 16 documentos",falso
-LCAM3,2022-07-01,24.15,indeterminado,,,,,,"C2: CNPJ 10.215.988/0001-60 (via FCA), CANCELADA em 2025-08-01, motivo: ELISÃO POR EXTINÇÃO DA CIA | C3: 22 documentos",falso
-BKBR3,2022-10-25,7.63,indeterminado,,,,,,"C2: CNPJ 13.574.594/0001-96 (via FCA), ATIVO | C3: 28 documentos",falso
-SULA11,2022-12-23,22.25,incorporacao,,,,,,"C2: CNPJ 29.978.814/0001-87 (via FCA), CANCELADA em 2022-04-14, motivo: INCORPORAÇÃO | C3: 4 documentos",falso
-BRML3,2023-01-06,8.26,indeterminado,,,,,,"C2: CNPJ 06.977.745/0001-91 (via FCA), ATIVO | C3: 11 documentos",falso
-WIZS3,2023-02-08,7.16,indeterminado,,,,,,"C2: CNPJ 42.278.473/0001-03 (via FCA), ATIVO | C3: 8 documentos",falso
-PARD3,2023-04-28,20.25,indeterminado,,,,,,"C2: CNPJ 19.378.769/0001-76 (via FCA), CANCELADA em 2023-07-19, motivo: CANCELAMENTO VOLUNTÁRIO | C3: 10 documentos",falso
-ENBR3,2023-08-21,24.08,indeterminado,,,,,,"C2: CNPJ 03.983.431/0001-03 (via FCA), ATIVO | C3: 18 documentos",falso
-VIIA3,2023-09-19,0.75,indeterminado,,,,,,"C2: CNPJ 33.041.260/0652-90 (via FCA), ATIVO | C3: 14 documentos",falso
-BRPR3,2023-10-19,131.17,indeterminado,,,,,,"C2: CNPJ 06.977.751/0001-49 (via B3), CANCELADA em 2023-12-20, motivo: CANCELAMENTO VOLUNTÁRIO | C3: 19 documentos",falso
-ALSO3,2023-10-24,23.33,indeterminado,,,,,,"C2: CNPJ 05.878.397/0001-32 (via FCA), ATIVO | C3: 7 documentos",falso
-ARZZ3,2024-07-31,48.65,indeterminado,,,,,,"C2: CNPJ 16.590.234/0001-76 (via FCA), ATIVO | C3: 12 documentos",falso
-ENAT3,2024-07-31,21.64,incorporacao,,,,,,"C2: CNPJ 11.669.021/0001-10 (via FCA), CANCELADA em 2024-11-01, motivo: ELISÃO POR INCORPORAÇÃO | C3: 19 documentos",falso
-SOMA3,2024-07-31,5.94,incorporacao,,,,,,"C2: CNPJ 10.285.590/0001-08 (via FCA), CANCELADA em 2024-07-31, motivo: ELISÃO POR INCORPORAÇÃO | C3: 5 documentos",falso
-CIEL3,2024-08-26,5.83,indeterminado,,,,,,"C2: CNPJ 01.027.058/0001-91 (via FCA), ATIVO | C3: 16 documentos",falso
-RRRP3,2024-09-06,22.87,indeterminado,,,,,,"C2: CNPJ 12.091.809/0001-55 (via FCA), ATIVO | C3: 28 documentos",falso
-AESB3,2024-10-31,8.11,indeterminado,,,,,,"C2: CNPJ 37.663.076/0001-07 (via FCA), ATIVO | C3: 13 documentos",falso
-TRPL4,2024-11-14,24.2,indeterminado,,,,,,"C2: CNPJ 02.998.611/0001-04 (via FCA), ATIVO | C3: 3 documentos",falso
-CCRO3,2025-04-30,13.45,indeterminado,,,,,,"C2: CNPJ 02.846.056/0001-97 (via FCA), ATIVO | C3: 29 documentos",falso
-CRFB3,2025-05-30,8.48,indeterminado,,,,,,"C2: CNPJ 75.315.333/0001-09 (via FCA), CANCELADA em 2025-12-22, motivo: CANCELAMENTO VOLUNTÁRIO | C3: 29 documentos",falso
-JBSS3,2025-06-06,39.03,indeterminado,,,,,,"C2: CNPJ 02.916.265/0001-60 (via FCA), ATIVO | C3: 12 documentos",falso
-GOLL4,2025-06-11,0.79,reestruturacao,GOLL54,,,,,"C1: GOLL54 (ab:nome, razao_preco=253.1772) | C2: CNPJ 06.164.253/0001-87 (via FCA), CANCELADA em 2026-04-01, motivo: ELISÃO POR INCORPORAÇÃO | C3: 29 documentos",falso
-NTCO3,2025-07-01,10.8,incorporacao,,,,,,"C2: CNPJ 32.785.497/0001-97 (via FCA), CANCELADA em 2025-07-01, motivo: ELISÃO POR INCORPORAÇÃO | C3: 12 documentos",falso
-BRFS3,2025-09-22,17.95,indeterminado,,,,,,"C2: CNPJ 01.838.723/0001-27 (via FCA), ATIVO | C3: 20 documentos",falso
-MRFG3,2025-09-22,21.12,troca_codigo,MBRF3,,,,,"C1: MBRF3 (b:nome, razao_preco=0.9328) | C2: CNPJ 03.853.896/0001-40 (via FCA), ATIVO | C3: 24 documentos",falso
-STBP3,2025-10-02,14.42,indeterminado,,,,,,"C2: CNPJ 02.762.121/0001-04 (via FCA), ATIVO | C3: 11 documentos",falso
-EMBR3,2025-10-31,86.99,troca_codigo,EMBJ3,,,,,"C1: EMBJ3 (b:nome, razao_preco=1.0032) | C2: CNPJ 07.689.002/0001-89 (via FCA), ATIVO | C3: 10 documentos",falso
-CPLE6,2025-11-07,14.26,conversao_classe,"CPLE3, CPLE5",,,,,"C1: CPLE3 (a, razao_preco=0.9607); CPLE5 (a, razao_preco=1.0147) | C2: CNPJ 76.483.817/0001-20 (via FCA), ATIVO | C3: 22 documentos",falso
-ELET3,2025-11-07,58.68,indeterminado,,,,,,"C2: CNPJ 00.001.180/0001-26 (via FCA), ATIVO | C3: 22 documentos",falso
-ELET6,2025-11-07,61.94,indeterminado,,,,,,"C2: CNPJ 00.001.180/0001-26 (via FCA), ATIVO | C3: 22 documentos",falso
-SRNA3,2025-11-13,12.62,indeterminado,,,,,,"C2: CNPJ 42.500.384/0001-51 (via FCA), ATIVO | C3: 9 documentos",falso
-AZUL4,2025-12-22,0.81,reestruturacao,"AZUL53, AZUL54",,,,,"C1: AZUL53 (ab:nome, razao_preco=50.9259); AZUL54 (ab:nome, razao_preco=4197.5309) | C2: CNPJ 09.305.994/0001-29 (via FCA), ATIVO | C3: 36 documentos",falso
-PETZ3,2026-01-02,4.39,indeterminado,,,,,,"C2: CNPJ 18.328.118/0001-09 (via FCA), CANCELADA em 2026-05-14, motivo: CANCELAMENTO VOLUNTÁRIO | C3: 5 documentos",falso
-BPAN4,2026-01-23,12.75,indeterminado,,,,,,"C2: CNPJ 59.285.411/0001-13 (via FCA), CANCELADA em 2026-03-30, motivo: CANCELAMENTO VOLUNTÁRIO | C3: 7 documentos",falso
-NEOE3,2026-05-04,33.8,indeterminado,,,,,,"C2: CNPJ 01.083.200/0001-18 (via FCA), ATIVO | C3: 26 documentos",falso
-ODPV3,2026-05-04,15.02,troca_codigo,SAUD3,,,,,"C1: SAUD3 (b:nome, razao_preco=1.0606) | C2: CNPJ 58.119.199/0001-51 (via FCA), ATIVO | C3: 15 documentos",falso
-OIBR3,2026-08-24,0.1,indeterminado,,,,,,"C2: CNPJ 76.535.764/0001-43 (via FCA), ATIVO | C3: 21 documentos",falso
-OIBR4,2026-08-24,0.5,indeterminado,,,,,,"C2: CNPJ 76.535.764/0001-43 (via FCA), ATIVO | C3: 21 documentos",falso
-RAIZ4,2026-10-30,0.3,reestruturacao,RAIZ55,,,,,"C1: RAIZ55 (ab:nome, razao_preco=90.3333) | C2: CNPJ 33.453.598/0001-23 (via FCA), ATIVO | C3: 13 documentos",falso
+ticker,ultimo_pregao,ultimo_preco,tipo,sucessor,relacao_troca,valor_dinheiro,data_efeito,fonte,evidencia_automatica,verificado,alerta
+ALLL11,2010-10-21,16.5,conversao_classe,ALLL3,,,,,"C1: ALLL3 (a, razao_preco=0.9576) | Razões propostas: ALLL3: 0.9576",falso,
+AEDU11,2010-12-03,37.35,troca_codigo,AEDU3,,,,,"C1: AEDU3 (ab:nome, razao_preco=0.9909) | Razões propostas: AEDU3: 0.9909",falso,
+ELPL6,2010-12-20,30.2,troca_codigo,ELPL4,,,,,"C1: ELPL3 (a, razao_preco=1.0808); ELPL4 (ab:nome, razao_preco=1.0195) | C2: CNPJ 61.695.227/0001-93 (via B3), ATIVO | C3: 10 documentos | Razões propostas: ELPL4: 1.0195",falso,multiplos_sucessores
+PCAR5,2011-03-31,67.12,troca_codigo,PCAR4,,,,,"C1: PCAR3 (a, razao_preco=1.0954); PCAR4 (ab:nome, razao_preco=1.028) | C2: CNPJ 47.508.411/0001-56 (via B3), ATIVO | C3: 3 documentos | Razões propostas: PCAR4: 1.028",falso,multiplos_sucessores
+VIVO4,2011-06-07,71.8,incorporacao,,,,,,"C2: CNPJ 02.558.074/0001-73 (via B3), CANCELADA em 2011-10-03 (dias=118), motivo: ELISÃO POR INCORPORAÇÃO | C3: 9 documentos",falso,
+TCSL3,2011-08-02,9.35,troca_codigo,TIMP3,,,,,"C1: TIMP3 (b:nome, razao_preco=0.9626) | Razões propostas: TIMP3: 0.9626",falso,
+TCSL4,2011-08-02,7.82,troca_codigo,TIMP3,,,,,"C1: TIMP3 (b:nome, razao_preco=1.1509) | Razões propostas: TIMP3: 1.1509",falso,
+UGPA4,2011-08-16,27.1,conversao_classe,UGPA3,,,,,"C1: UGPA3 (a, razao_preco=1.0221) | C2: CNPJ 33.256.439/0001-39 (via B3), ATIVO | C3: 5 documentos | Razões propostas: UGPA3: 1.0221",falso,
+TLPP4,2011-10-05,46.55,indeterminado,,,,,,,falso,
+ECOD3,2011-10-11,0.58,indeterminado,,,,,,,falso,
+DROG3,2011-12-16,13.35,indeterminado,,,,,,,falso,
+FFTL4,2011-12-23,25.06,indeterminado,,,,,,"C2: CNPJ 19.443.985/0001-58 (via B3), CANCELADA em 2011-12-23 (dias=0), motivo: CANCELAMENTO VOLUNTÁRIO | C3: 5 documentos",falso,
+BRTO4,2012-04-05,9.56,indeterminado,,,,,,,falso,
+TMAR5,2012-04-05,42.67,indeterminado,,,,,,,falso,
+TNLP3,2012-04-05,27.75,indeterminado,,,,,,"C2: CNPJ 02.558.134/0001-58 (via B3), CANCELADA em 2012-02-27 (dias=-38), motivo: ELISÃO POR INCORPORAÇÃO | C3: 5 documentos",falso,cancelamento_anterior
+TNLP4,2012-04-05,20.36,indeterminado,,,,,,"C2: CNPJ 02.558.134/0001-58 (via B3), CANCELADA em 2012-02-27 (dias=-38), motivo: ELISÃO POR INCORPORAÇÃO | C3: 5 documentos",falso,cancelamento_anterior
+TAMM4,2012-07-18,52.73,indeterminado,,,,,,"C2: CNPJ 01.832.635/0001-18 (via B3), CANCELADA em 2012-07-18 (dias=0), motivo: CANCELAMENTO VOLUNTÁRIO | C3: 9 documentos",falso,
+RDCD3,2012-10-17,35.16,indeterminado,,,,,,,falso,
+KROT11,2012-12-04,40.0,conversao_classe,KROT3,,,,,"C1: KROT3 (a, razao_preco=1.0225) | Razões propostas: KROT3: 1.0225",falso,
+OHLB3,2012-12-21,18.85,indeterminado,,,,,,,falso,
+AMIL3,2013-05-08,32.2,indeterminado,,,,,,"C2: CNPJ 36.461.242/0001-20 (via B3), CANCELADA em 2013-05-09 (dias=1), motivo: CANCELAMENTO VOLUNTÁRIO | C3: 7 documentos",falso,
+MPXE3,2013-10-21,4.7,troca_codigo,ENEV3,,,,,"C1: ENEV3 (b:nome, razao_preco=1.0106) | Razões propostas: ENEV3: 1.0106",falso,
+AMBV3,2013-11-08,87.0,indeterminado,,,,,,"C2: CNPJ 02.808.708/0001-07 (via B3), CANCELADA em 2013-12-12 (dias=34), motivo: CANCELAMENTO VOLUNTÁRIO | C3: 6 documentos",falso,
+AMBV4,2013-11-08,86.8,indeterminado,,,,,,"C2: CNPJ 02.808.708/0001-07 (via B3), CANCELADA em 2013-12-12 (dias=34), motivo: CANCELAMENTO VOLUNTÁRIO | C3: 6 documentos",falso,
+LLXL3,2014-04-03,1.06,indeterminado,,,,,,,falso,
+AEDU3,2014-07-03,18.35,indeterminado,,,,,,,falso,
+BISA3,2015-01-02,1.58,indeterminado,,,,,,,falso,
+NETC4,2015-01-27,40.0,indeterminado,,,,,,"C2: CNPJ 00.108.786/0001-65 (via B3), CANCELADA em 2014-12-31 (dias=-27), motivo: ELISÃO POR INCORPORAÇÃO | C3: 6 documentos",falso,cancelamento_anterior
+IMCH3,2015-03-30,6.39,indeterminado,,,,,,"C2: CNPJ 08.936.792/0001-12 (via B3), CANCELADA em 2014-12-01 (dias=-119), motivo: ELISÃO POR INCORPORAÇÃO | C3: 6 documentos",falso,cancelamento_anterior
+ALLL3,2015-03-31,3.97,indeterminado,,,,,,,falso,
+HRTP3,2015-06-25,4.25,indeterminado,,,,,,,falso,
+CRUZ3,2015-11-30,27.59,indeterminado,,,,,,"C2: CNPJ 33.009.911/0001-39 (via B3), CANCELADA em 2015-12-01 (dias=1), motivo: CANCELAMENTO VOLUNTÁRIO | C3: 12 documentos",falso,
+GETI3,2015-12-30,14.45,incorporacao,,,,,,"C2: CNPJ 02.998.609/0001-27 (via B3), CANCELADA em 2015-12-31 (dias=1), motivo: ELISÃO POR INCORPORAÇÃO | C3: 11 documentos",falso,
+GETI4,2015-12-30,14.46,incorporacao,,,,,,"C2: CNPJ 02.998.609/0001-27 (via B3), CANCELADA em 2015-12-31 (dias=1), motivo: ELISÃO POR INCORPORAÇÃO | C3: 11 documentos",falso,
+ARTR3,2016-06-16,10.01,indeterminado,,,,,,,falso,
+TBLE3,2016-07-20,41.39,indeterminado,,,,,,,falso,
+STBP11,2016-08-19,14.4,troca_codigo,STBP3,,,,,"C1: STBP3 (ab:nome, razao_preco=0.1917) | C2: CNPJ 02.762.121/0001-04 (via FCA), ATIVO | C3: 5 documentos | Razões propostas: STBP3: 0.1917 | relação de troca não verificada; não presumir 1:1",falso,razao_extrema
+VAGR3,2016-11-04,13.0,indeterminado,,,,,,,falso,
+RUMO3,2017-03-10,8.41,indeterminado,,,,,,"C2: CNPJ 71.550.388/0001-42 (via B3), CANCELADA em 2016-12-19 (dias=-81), motivo: ELISÃO POR INCORPORAÇÃO | C3: 3 documentos",falso,cancelamento_anterior
+CTIP3,2017-03-29,49.5,incorporacao,,,,,,"C2: CNPJ 09.358.105/0001-91 (via B3), CANCELADA em 2017-07-03 (dias=96), motivo: ELISÃO POR INCORPORAÇÃO | C3: 15 documentos",falso,
+BBTG11,2017-08-18,15.01,desmembramento,BPAC11+BBTG12,,,,,"Ofício Circular B3 046/2017-DP (citado pela revisão; a ler): migração para BPAC11 e BBTG12. Fechamentos em 18/08/2017: BBTG11 15,01; BPAC11 14,50; BBTG12 0,54. Proporção a confirmar.",falso,multiplos_sucessores
+SMLE3,2017-10-20,92.82,troca_codigo,SMLS3,,,,,"C1: SMLS3 (b:nome, razao_preco=0.9804) | C2: CNPJ 15.912.764/0001-20 (via B3), CANCELADA em 2017-07-01 (dias=-111), motivo: ELISÃO POR INCORPORAÇÃO | C3: 9 documentos | Razões propostas: SMLS3: 0.9804",falso,cancelamento_anterior
+SUZB5,2017-11-09,21.13,conversao_classe,SUZB3,,,,,"C1: SUZB3 (a, razao_preco=0.973) | C2: CNPJ 16.404.287/0001-55 (via B3), ATIVO | C3: 8 documentos | Razões propostas: SUZB3: 0.973",falso,
+ELPL4,2017-11-24,15.98,conversao_classe,ELPL3,,,,,"C1: ELPL3 (a, razao_preco=1.0075) | C2: CNPJ 61.695.227/0001-93 (via B3), ATIVO | C3: 19 documentos | Razões propostas: ELPL3: 1.0075",falso,
+VALE5,2017-11-24,33.36,conversao_classe,VALE3,,,,,"C1: VALE3 (a, razao_preco=1.0615) | C2: CNPJ 33.592.510/0001-54 (via B3), ATIVO | C3: 20 documentos | Razões propostas: VALE3: 1.0615",falso,
+BVMF3,2018-03-23,25.43,troca_codigo,B3SA3,,,,,"C1: B3SA3 (b:nome, razao_preco=1.009) | C2: CNPJ 09.346.601/0001-25 (via FCA), ATIVO | C3: 10 documentos | Razões propostas: B3SA3: 1.009",falso,
+VVAR11,2018-11-23,14.58,conversao_classe,VVAR3,,,,,"C1: VVAR3 (a, razao_preco=0.3395) | C2: CNPJ 33.041.260/0652-90 (via FCA), ATIVO | C3: 13 documentos | Razões propostas: VVAR3: 0.3395 | relação de troca não verificada; não presumir 1:1",falso,razao_extrema
+FIBR3,2019-01-03,66.3,incorporacao,,,,,,"C2: CNPJ 60.643.228/0001-21 (via FCA), CANCELADA em 2019-04-01 (dias=88), motivo: ELISÃO POR INCORPORAÇÃO | C3: 13 documentos",falso,
+OGXP3,2019-01-10,1.63,indeterminado,,,,,,"C2: CNPJ 07.957.093/0001-96 (via FCA), CANCELADA em 2019-03-12 (dias=61), motivo: CANCELAMENTO VOLUNTÁRIO | C3: 7 documentos",falso,
+MPLU3,2019-04-22,26.8,indeterminado,,,,,,"C2: CNPJ 11.094.546/0001-75 (via FCA), CANCELADA em 2019-05-06 (dias=14), motivo: CANCELAMENTO VOLUNTÁRIO | C3: 10 documentos",falso,
+QGEP3,2019-04-23,14.54,troca_codigo,ENAT3,,,,,"CNPJ candidato: ENAT3 (mesma classe) | C2: CNPJ 11.669.021/0001-10 (via FCA), CANCELADA em 2024-11-01 (dias=2019), motivo: ELISÃO POR INCORPORAÇÃO | C3: 7 documentos | Razões propostas: ENAT3: 1.0069",falso,candidato_cnpj
+BPHA3,2019-06-10,0.62,indeterminado,,,,,,"C2: CNPJ 11.395.624/0001-71 (via FCA), ATIVO | C3: 11 documentos",falso,
+ESTC3,2019-07-22,33.52,troca_codigo,YDUQ3,,,,,"CNPJ candidato: YDUQ3 (mesma classe) | C2: CNPJ 08.807.432/0001-10 (via FCA), ATIVO | C3: 2 documentos | Razões propostas: YDUQ3: 1.0251",falso,candidato_cnpj
+ALSC3,2019-08-05,27.75,incorporacao,,,,,,"C2: CNPJ 06.082.980/0001-03 (via FCA), CANCELADA em 2019-08-05 (dias=0), motivo: ELISÃO POR INCORPORAÇÃO | C3: 10 documentos",falso,
+KROT3,2019-10-10,10.38,indeterminado,,,,,,,falso,
+ELPL3,2019-11-26,49.32,indeterminado,,,,,,"C2: CNPJ 61.695.227/0001-93 (via FCA), ATIVO | C3: 10 documentos",falso,
+PCAR4,2020-02-28,72.11,conversao_classe,PCAR3,,,,,"C1: PCAR3 (a, razao_preco=1.0225) | C2: CNPJ 47.508.411/0001-56 (via FCA), ATIVO | C3: 24 documentos | Razões propostas: PCAR3: 1.0225",falso,
+TIMP3,2020-10-09,13.46,indeterminado,,,,,,"C2: CNPJ 02.558.115/0001-21 (via FCA), CANCELADA em 2020-08-31 (dias=-39), motivo: ELISÃO POR EXTINÇÃO DA CIA | C3: 18 documentos",falso,cancelamento_anterior
+VIVT4,2020-11-20,45.34,conversao_classe,VIVT3,,,,,"C1: VIVT3 (a, razao_preco=0.9755) | C2: CNPJ 02.558.157/0001-62 (via FCA), ATIVO | C3: 20 documentos | Razões propostas: VIVT3: 0.9755",falso,
+TIET11,2021-03-26,17.44,incorporacao,,,,,,"C2: CNPJ 04.128.563/0001-10 (via FCA), CANCELADA em 2021-05-13 (dias=48), motivo: ELISÃO POR INCORPORAÇÃO | C3: 20 documentos",falso,
+CNTO3,2021-03-30,28.08,troca_codigo,SBFG3,,,,,"CNPJ candidato: SBFG3 (mesma classe) | C2: CNPJ 13.217.485/0001-11 (via FCA), ATIVO | C3: 7 documentos | Razões propostas: SBFG3: 0.9405",falso,candidato_cnpj
+MMXM3,2021-05-19,14.0,indeterminado,,,,,,"C2: CNPJ 02.762.115/0001-49 (via FCA), CANCELADA em 2024-09-24 (dias=1224), motivo: CANCELAMENTO DE OFÍCIO | C3: 16 documentos",falso,
+SMLS3,2021-06-04,22.4,incorporacao,,,,,,"C2: CNPJ 05.730.375/0001-20 (via FCA), CANCELADA em 2021-09-01 (dias=89), motivo: ELISÃO POR INCORPORAÇÃO | C3: 19 documentos",falso,
+LINX3,2021-06-25,37.4,indeterminado,,,,,,"C2: CNPJ 06.948.969/0001-75 (via FCA), CANCELADA em 2021-08-02 (dias=38), motivo: CANCELAMENTO VOLUNTÁRIO | C3: 18 documentos",falso,
+BTOW3,2021-07-16,68.0,troca_codigo,AMER3,,,,,"CNPJ candidato: AMER3 (mesma classe) | C2: CNPJ 00.776.574/0001-56 (via FCA), ATIVO | C3: 17 documentos | Razões propostas: AMER3: 0.9106",falso,candidato_cnpj
+VVAR3,2021-08-13,11.3,troca_codigo,VIIA3,,,,,"CNPJ candidato: VIIA3 (mesma classe) | C2: CNPJ 33.041.260/0652-90 (via FCA), ATIVO | C3: 5 documentos | Razões propostas: VIIA3: 0.9389",falso,candidato_cnpj
+DTEX3,2021-08-18,20.63,troca_codigo,DXCO3,,,,,"CNPJ candidato: DXCO3 (mesma classe) | C2: CNPJ 97.837.181/0001-47 (via FCA), ATIVO | C3: 3 documentos | Razões propostas: DXCO3: 1.0063",falso,candidato_cnpj
+HGTX3,2021-09-17,37.5,indeterminado,,,,,,"C2: CNPJ 78.876.950/0001-71 (via FCA), CANCELADA em 2022-02-23 (dias=159), motivo: CANCELAMENTO VOLUNTÁRIO | C3: 12 documentos",falso,
+BRDT3,2021-10-21,22.03,troca_codigo,VBBR3,,,,,"CNPJ candidato: VBBR3 (mesma classe) | C2: CNPJ 34.274.233/0001-02 (via FCA), ATIVO | C3: 23 documentos | Razões propostas: VBBR3: 0.9764",falso,candidato_cnpj
+IGTA3,2021-11-19,33.13,indeterminado,,,,,,"C2: CNPJ 51.218.147/0001-93 (via FCA), ATIVO | C3: 9 documentos",falso,
+LAME3,2022-01-21,6.62,indeterminado,,,,,,"C2: CNPJ 33.014.556/0001-96 (via FCA), CANCELADA em 2021-12-10 (dias=-42), motivo: ELISÃO POR INCORPORAÇÃO | C3: 10 documentos",falso,cancelamento_anterior
+LAME4,2022-01-21,6.55,indeterminado,,,,,,"C2: CNPJ 33.014.556/0001-96 (via FCA), CANCELADA em 2021-12-10 (dias=-42), motivo: ELISÃO POR INCORPORAÇÃO | C3: 10 documentos",falso,cancelamento_anterior
+GNDI3,2022-02-11,66.95,indeterminado,,,,,,"C2: CNPJ 19.853.511/0001-84 (via FCA), CANCELADA em 2022-03-18 (dias=35), motivo: CANCELAMENTO VOLUNTÁRIO | C3: 12 documentos",falso,
+CESP6,2022-03-25,25.25,indeterminado,,,,,,"C2: CNPJ 60.933.603/0001-78 (via FCA), ATIVO | C3: 17 documentos",falso,
+BBRK3,2022-05-17,0.8,troca_codigo,NEXP3,,,,,"CNPJ candidato: NEXP3 (mesma classe) | C2: CNPJ 08.613.550/0001-98 (via FCA), ATIVO | C3: 11 documentos | Razões propostas: NEXP3: 0.9625",falso,candidato_cnpj
+BIDI11,2022-06-17,10.4,indeterminado,,,,,,"C2: CNPJ 00.416.968/0001-01 (via FCA), CANCELADA em 2022-12-02 (dias=168), motivo: CANCELAMENTO VOLUNTÁRIO | C3: 16 documentos",falso,
+BIDI4,2022-06-17,3.41,indeterminado,,,,,,"C2: CNPJ 00.416.968/0001-01 (via FCA), CANCELADA em 2022-12-02 (dias=168), motivo: CANCELAMENTO VOLUNTÁRIO | C3: 16 documentos",falso,
+LCAM3,2022-07-01,24.15,indeterminado,,,,,,"C2: CNPJ 10.215.988/0001-60 (via FCA), CANCELADA em 2025-08-01 (dias=1127), motivo: ELISÃO POR EXTINÇÃO DA CIA | C3: 22 documentos",falso,
+BKBR3,2022-10-25,7.63,troca_codigo,ZAMP3,,,,,"CNPJ candidato: ZAMP3 (mesma classe) | C2: CNPJ 13.574.594/0001-96 (via FCA), ATIVO | C3: 28 documentos | Razões propostas: ZAMP3: 0.9921",falso,candidato_cnpj
+SULA11,2022-12-23,22.25,indeterminado,,,,,,"C2: CNPJ 29.978.814/0001-87 (via FCA), CANCELADA em 2022-04-14 (dias=-253), motivo: INCORPORAÇÃO | C3: 4 documentos",falso,cancelamento_anterior
+BRML3,2023-01-06,8.26,indeterminado,,,,,,"C2: CNPJ 06.977.745/0001-91 (via FCA), ATIVO | C3: 11 documentos",falso,
+WIZS3,2023-02-08,7.16,troca_codigo,WIZC3,,,,,"CNPJ candidato: WIZC3 (mesma classe) | C2: CNPJ 42.278.473/0001-03 (via FCA), ATIVO | C3: 8 documentos | Razões propostas: WIZC3: 0.9497",falso,candidato_cnpj
+PARD3,2023-04-28,20.25,indeterminado,,,,,,"C2: CNPJ 19.378.769/0001-76 (via FCA), CANCELADA em 2023-07-19 (dias=82), motivo: CANCELAMENTO VOLUNTÁRIO | C3: 10 documentos",falso,
+ENBR3,2023-08-21,24.08,indeterminado,,,,,,"C2: CNPJ 03.983.431/0001-03 (via FCA), ATIVO | C3: 18 documentos",falso,
+VIIA3,2023-09-19,0.75,troca_codigo,BHIA3,,,,,"CNPJ candidato: BHIA3 (mesma classe) | C2: CNPJ 33.041.260/0652-90 (via FCA), ATIVO | C3: 14 documentos | Razões propostas: BHIA3: 1.0",falso,candidato_cnpj
+BRPR3,2023-10-19,131.17,indeterminado,,,,,,"C2: CNPJ 06.977.751/0001-49 (via B3), CANCELADA em 2023-12-20 (dias=62), motivo: CANCELAMENTO VOLUNTÁRIO | C3: 19 documentos",falso,
+ALSO3,2023-10-24,23.33,troca_codigo,ALOS3,,,,,"CNPJ candidato: ALOS3 (mesma classe) | C2: CNPJ 05.878.397/0001-32 (via FCA), ATIVO | C3: 7 documentos | Razões propostas: ALOS3: 0.9923",falso,candidato_cnpj
+ARZZ3,2024-07-31,48.65,troca_codigo,AZZA3,,,,,"CNPJ candidato: AZZA3 (mesma classe) | C2: CNPJ 16.590.234/0001-76 (via FCA), ATIVO | C3: 12 documentos | Razões propostas: AZZA3: 1.0358",falso,candidato_cnpj
+ENAT3,2024-07-31,21.64,incorporacao,,,,,,"C2: CNPJ 11.669.021/0001-10 (via FCA), CANCELADA em 2024-11-01 (dias=93), motivo: ELISÃO POR INCORPORAÇÃO | C3: 19 documentos",falso,
+SOMA3,2024-07-31,5.94,incorporacao,,,,,,"C2: CNPJ 10.285.590/0001-08 (via FCA), CANCELADA em 2024-07-31 (dias=0), motivo: ELISÃO POR INCORPORAÇÃO | C3: 5 documentos",falso,
+CIEL3,2024-08-26,5.83,indeterminado,,,,,,"C2: CNPJ 01.027.058/0001-91 (via FCA), ATIVO | C3: 16 documentos",falso,
+RRRP3,2024-09-06,22.87,troca_codigo,BRAV3,,,,,"CNPJ candidato: BRAV3 (mesma classe) | C2: CNPJ 12.091.809/0001-55 (via FCA), ATIVO | C3: 28 documentos | Razões propostas: BRAV3: 0.9598",falso,candidato_cnpj
+AESB3,2024-10-31,8.11,indeterminado,,,,,,"C2: CNPJ 37.663.076/0001-07 (via FCA), ATIVO | C3: 13 documentos",falso,
+TRPL4,2024-11-14,24.2,troca_codigo,ISAE4,,,,,"CNPJ candidato: ISAE3 (classe diferente); ISAE4 (mesma classe) | C2: CNPJ 02.998.611/0001-04 (via FCA), ATIVO | C3: 3 documentos | Razões propostas: ISAE4: 0.9946",falso,candidato_cnpj;classe_diferente
+CCRO3,2025-04-30,13.45,troca_codigo,MOTV3,,,,,"CNPJ candidato: MOTV3 (mesma classe) | C2: CNPJ 02.846.056/0001-97 (via FCA), ATIVO | C3: 29 documentos | Razões propostas: MOTV3: 1.0394",falso,candidato_cnpj
+CRFB3,2025-05-30,8.48,indeterminado,,,,,,"C2: CNPJ 75.315.333/0001-09 (via FCA), CANCELADA em 2025-12-22 (dias=206), motivo: CANCELAMENTO VOLUNTÁRIO | C3: 29 documentos",falso,
+JBSS3,2025-06-06,39.03,indeterminado,,,,,,"C2: CNPJ 02.916.265/0001-60 (via FCA), ATIVO | C3: 12 documentos",falso,
+GOLL4,2025-06-11,0.79,reestruturacao,GOLL54,,,,,"C1: GOLL54 (ab:nome, razao_preco=253.1772) | C2: CNPJ 06.164.253/0001-87 (via FCA), CANCELADA em 2026-04-01 (dias=294), motivo: ELISÃO POR INCORPORAÇÃO | C3: 29 documentos | Razões propostas: GOLL54: 253.1772 | relação de troca não verificada; não presumir 1:1",falso,razao_extrema
+NTCO3,2025-07-01,10.8,incorporacao,,,,,,"C2: CNPJ 32.785.497/0001-97 (via FCA), CANCELADA em 2025-07-01 (dias=0), motivo: ELISÃO POR INCORPORAÇÃO | C3: 12 documentos",falso,
+BRFS3,2025-09-22,17.95,indeterminado,,,,,,"C2: CNPJ 01.838.723/0001-27 (via FCA), ATIVO | C3: 20 documentos",falso,
+MRFG3,2025-09-22,21.12,troca_codigo,MBRF3,,,,,"C1: MBRF3 (b:nome, razao_preco=0.9328) | C2: CNPJ 03.853.896/0001-40 (via FCA), ATIVO | C3: 24 documentos | Razões propostas: MBRF3: 0.9328",falso,
+STBP3,2025-10-02,14.42,indeterminado,,,,,,"C2: CNPJ 02.762.121/0001-04 (via FCA), ATIVO | C3: 11 documentos",falso,
+EMBR3,2025-10-31,86.99,troca_codigo,EMBJ3,,,,,"C1: EMBJ3 (b:nome, razao_preco=1.0032) | C2: CNPJ 07.689.002/0001-89 (via FCA), ATIVO | C3: 10 documentos | Razões propostas: EMBJ3: 1.0032",falso,
+CPLE6,2025-11-07,14.26,conversao_classe,"CPLE3, CPLE5",,,,,"C1: CPLE3 (a, razao_preco=0.9607); CPLE5 (a, razao_preco=1.0147) | C2: CNPJ 76.483.817/0001-20 (via FCA), ATIVO | C3: 22 documentos | Razões propostas: CPLE3: 0.9607; CPLE5: 1.0147",falso,multiplos_sucessores
+ELET3,2025-11-07,58.68,troca_codigo,AXIA3,,,,,"CNPJ candidato: AXIA3 (mesma classe) | C2: CNPJ 00.001.180/0001-26 (via FCA), ATIVO | C3: 22 documentos | Razões propostas: AXIA3: 1.014",falso,candidato_cnpj
+ELET6,2025-11-07,61.94,indeterminado,,,,,,"CNPJ candidato: AXIA3 (classe diferente) | C2: CNPJ 00.001.180/0001-26 (via FCA), ATIVO | C3: 22 documentos",falso,classe_diferente
+SRNA3,2025-11-13,12.62,indeterminado,,,,,,"C2: CNPJ 42.500.384/0001-51 (via FCA), ATIVO | C3: 9 documentos",falso,
+AZUL4,2025-12-22,0.81,reestruturacao,"AZUL53, AZUL54",,,,,"C1: AZUL53 (ab:nome, razao_preco=50.9259); AZUL54 (ab:nome, razao_preco=4197.5309) | C2: CNPJ 09.305.994/0001-29 (via FCA), ATIVO | C3: 36 documentos | Razões propostas: AZUL53: 50.9259; AZUL54: 4197.5309 | relação de troca não verificada; não presumir 1:1",falso,razao_extrema;multiplos_sucessores
+PETZ3,2026-01-02,4.39,indeterminado,,,,,,"C2: CNPJ 18.328.118/0001-09 (via FCA), CANCELADA em 2026-05-14 (dias=132), motivo: CANCELAMENTO VOLUNTÁRIO | C3: 5 documentos",falso,
+BPAN4,2026-01-23,12.75,indeterminado,,,,,,"C2: CNPJ 59.285.411/0001-13 (via FCA), CANCELADA em 2026-03-30 (dias=66), motivo: CANCELAMENTO VOLUNTÁRIO | C3: 7 documentos",falso,
+NEOE3,2026-05-04,33.8,indeterminado,,,,,,"C2: CNPJ 01.083.200/0001-18 (via FCA), ATIVO | C3: 26 documentos",falso,
+ODPV3,2026-05-04,15.02,troca_codigo,SAUD3,,,,,"C1: SAUD3 (b:nome, razao_preco=1.0606) | C2: CNPJ 58.119.199/0001-51 (via FCA), ATIVO | C3: 15 documentos | Razões propostas: SAUD3: 1.0606",falso,
+OIBR3,2026-08-24,0.1,indeterminado,,,,,,"C2: CNPJ 76.535.764/0001-43 (via FCA), ATIVO | C3: 21 documentos",falso,
+OIBR4,2026-08-24,0.5,indeterminado,,,,,,"C2: CNPJ 76.535.764/0001-43 (via FCA), ATIVO | C3: 21 documentos",falso,
+RAIZ4,2026-10-30,0.3,reestruturacao,RAIZ55,,,,,"C1: RAIZ55 (ab:nome, razao_preco=90.3333) | C2: CNPJ 33.453.598/0001-23 (via FCA), ATIVO | C3: 13 documentos | Razões propostas: RAIZ55: 90.3333 | relação de troca não verificada; não presumir 1:1",falso,razao_extrema

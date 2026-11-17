@@ -53,10 +53,17 @@ linhas = []
 for raiz in raizes:
     # raiz desconhecida da B3: resposta vazia (0 bytes) ou lista vazia
     dados = json.loads((PASTA / f"suplemento_{raiz}.json").read_text() or "[]")
-    emissor = dados[0] if isinstance(dados, list) and dados else {}
-    codigo = (emissor.get("codeCVM") or "").strip()
-    linhas.append((raiz, int(codigo) if codigo.isdigit() and int(codigo) > 0 else None,
-                   (emissor.get("tradingName") or "").strip() or None))
+    if not isinstance(dados, list) or any(not isinstance(e, dict) for e in dados):
+        raise ValueError(f"{raiz}: formato de resposta inesperado: {dados!r}")
+    emissores = []
+    for emissor in dados:
+        codigo = (emissor.get("codeCVM") or "").strip()
+        emissores.append((int(codigo) if codigo.isdigit() and int(codigo) > 0 else None,
+                         (emissor.get("tradingName") or "").strip() or None))
+    if len(emissores) > 1:
+        raise ValueError(f"{raiz}: mais de um emissor: {emissores!r}")
+    linhas.extend((raiz, codigo, nome) for codigo, nome in emissores or [(None, None)])
+con.begin()
 con.sql("CREATE OR REPLACE TABLE b3_emissores (raiz VARCHAR, codigo_cvm INTEGER, nome_pregao VARCHAR)")
 con.executemany("INSERT INTO b3_emissores VALUES (?, ?, ?)", linhas)
 
@@ -67,6 +74,8 @@ con.sql("""
            count(*) FILTER (WHERE codigo_cvm IS NULL) AS sem_codigo_cvm
     FROM b3_emissores
 """).show()
+if con.sql("SELECT count(*) = count(DISTINCT raiz) FROM b3_emissores").fetchall()[0][0] is not True:
+    raise ValueError("b3_emissores: raiz duplicada")
 
 # Checagem 2: código CVM -> CNPJ no cadastro da CVM (quantos CNPJs por código)
 #             e nome da B3 ao lado do nome do COTAHIST, para conferência manual
@@ -87,4 +96,5 @@ con.sql(f"""
     GROUP BY ALL ORDER BY cnpjs = 0, t.ultimo_pregao
 """).show(max_rows=60, max_width=220)
 
+con.commit()
 con.close()

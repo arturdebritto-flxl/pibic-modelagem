@@ -7,6 +7,11 @@ BASE = "https://dados.cvm.gov.br/dados/CIA_ABERTA"
 PASTA = Path("dados/brutos/cvm")
 ANOS = range(2010, 2027)
 PAUSA_S = 1
+REMOVIDAS_ESPERADAS = {
+    "cvm_cadastro": 111,
+    "cvm_fca_valor_mobiliario": 84,
+    "cvm_ipe": 946,
+}
 
 ARQUIVOS = (
     ["CAD/DADOS/cad_cia_aberta.csv", "CAD/META/meta_cad_cia_aberta.txt",
@@ -48,7 +53,10 @@ import duckdb
 
 tmp = Path(tempfile.mkdtemp())
 linhas_arquivo = {}
-for z in sorted(PASTA.glob("*_cia_aberta_2*.zip")):
+for caminho in ARQUIVOS:
+    if "/DADOS/" not in caminho or not caminho.endswith(".zip"):
+        continue
+    z = PASTA / Path(caminho).name
     with zipfile.ZipFile(z) as arq:
         for nome in arq.namelist():
             if nome.startswith(("ipe_cia_aberta_2", "fca_cia_aberta_valor_mobiliario_")):
@@ -59,10 +67,11 @@ linhas_arquivo["cad_cia_aberta.csv"] = (PASTA / "cad_cia_aberta.csv").read_bytes
 LER = "delim = ';', header = true, quote = '', escape = '', encoding = 'latin-1', all_varchar = true, filename = true"
 
 con = duckdb.connect("dados/pibic.duckdb")
+con.begin()
 
 # 3. Cadastro de companhias abertas (só os campos usados; o bruto guarda o resto)
 con.sql(f"""
-    CREATE OR REPLACE TABLE cvm_cadastro AS
+    CREATE OR REPLACE TEMP TABLE cvm_cadastro_lidas AS
     SELECT CNPJ_CIA                AS cnpj,
            CAST(CD_CVM AS INTEGER) AS codigo_cvm,
            DENOM_SOCIAL            AS denominacao_social,
@@ -79,7 +88,7 @@ con.sql(f"""
 
 # 4. FCA — valores mobiliários (ticker ↔ CNPJ), todos os anos
 con.sql(f"""
-    CREATE OR REPLACE TABLE cvm_fca_valor_mobiliario AS
+    CREATE OR REPLACE TEMP TABLE cvm_fca_valor_mobiliario_lidas AS
     SELECT CAST(regexp_extract(filename, '(\\d{{4}})\\.csv$', 1) AS INTEGER) AS ano_arquivo,
            CNPJ_Companhia                       AS cnpj,
            CAST(Data_Referencia AS DATE)        AS data_referencia,
@@ -104,7 +113,7 @@ con.sql(f"""
 
 # 5. IPE — índice dos documentos periódicos e eventuais, 2010–2026
 con.sql(f"""
-    CREATE OR REPLACE TABLE cvm_ipe AS
+    CREATE OR REPLACE TEMP TABLE cvm_ipe_lidas AS
     SELECT CAST(regexp_extract(filename, '(\\d{{4}})\\.csv$', 1) AS INTEGER) AS ano_arquivo,
            CNPJ_Companhia                AS cnpj,
            Nome_Companhia                AS nome_companhia,
@@ -128,10 +137,23 @@ esperado = {
     "cvm_fca_valor_mobiliario": sum(n for a, n in linhas_arquivo.items() if a.startswith("fca")),
     "cvm_ipe": sum(n for a, n in linhas_arquivo.items() if a.startswith("ipe")),
 }
-print("\nChecagem 1: linhas nos arquivos x linhas na tabela")
+print("\nChecagem 1: linhas dos arquivos, lidas, mantidas e removidas")
 for tabela, n in esperado.items():
-    lidas = con.sql(f"SELECT count(*) FROM {tabela}").fetchall()[0][0]
-    print(f"  {tabela}: arquivos {n}, tabela {lidas}", "OK" if n == lidas else "DIVERGENTE")
+    lidas = con.sql(f"SELECT count(*) FROM {tabela}_lidas").fetchall()[0][0]
+    mantidas = con.sql(f"SELECT count(*) FROM (SELECT DISTINCT * FROM {tabela}_lidas)").fetchall()[0][0]
+    removidas = lidas - mantidas
+    print(f"  {tabela}: arquivos={n}, lidas={lidas}, mantidas={mantidas}, removidas={removidas}")
+    if lidas != n or removidas != REMOVIDAS_ESPERADAS[tabela]:
+        raise ValueError(f"{tabela}: contagem divergente; esperadas {n} lidas e "
+                         f"{REMOVIDAS_ESPERADAS[tabela]} removidas")
+    con.sql(f"CREATE OR REPLACE TABLE {tabela} AS SELECT DISTINCT * FROM {tabela}_lidas")
+    grupos, excedentes = con.sql(f"""
+        SELECT count(*) AS grupos, coalesce(sum(n - 1), 0) AS excedentes
+        FROM (SELECT *, count(*) AS n FROM {tabela} GROUP BY ALL HAVING count(*) > 1)
+    """).fetchall()[0]
+    print(f"    duplicatas após carga: grupos={grupos}, excedentes={excedentes}")
+    if (grupos, excedentes) != (0, 0):
+        raise ValueError(f"{tabela}: duplicatas após a carga")
 
 # Checagem 2: cadastro — candidatos a chave, nulos e faixa de datas
 con.sql("""
@@ -155,13 +177,12 @@ con.sql("""
     GROUP BY ano_arquivo ORDER BY ano_arquivo
 """).show(max_rows=30)
 
-# Checagem 4: FCA — linhas idênticas e tickers ligados a mais de um CNPJ
+# Checagem 4: FCA — valores do campo ticker ligados a mais de um CNPJ.
+# Inclui valores inválidos, como 'N/A'; não são chaves de ações.
 con.sql("""
-    SELECT (SELECT count(*) FROM (SELECT 1 FROM cvm_fca_valor_mobiliario
-             GROUP BY ALL HAVING count(*) > 1))                    AS grupos_linhas_identicas,
-           (SELECT count(*) FROM (SELECT ticker FROM cvm_fca_valor_mobiliario
-             WHERE ticker IS NOT NULL
-             GROUP BY ticker HAVING count(DISTINCT cnpj) > 1))     AS tickers_com_varios_cnpj
+    SELECT ticker, count(DISTINCT cnpj) AS cnpjs
+    FROM cvm_fca_valor_mobiliario WHERE ticker IS NOT NULL
+    GROUP BY ticker HAVING count(DISTINCT cnpj) > 1 ORDER BY ticker
 """).show()
 
 # Checagem 5: IPE — linhas por ano, unicidade do link, nulos e faixa de datas
@@ -181,4 +202,16 @@ con.sql("""
     GROUP BY categoria ORDER BY linhas DESC
 """).show(max_rows=50)
 
+# Unicidade observada, sem presumir chave de negócio para FCA ou IPE.
+print("Checagem 7: candidatos a chave (grupos repetidos)")
+for tabela, colunas in [
+    ("cvm_cadastro", "codigo_cvm"),
+    ("cvm_fca_valor_mobiliario", "ano_arquivo, id_documento"),
+    ("cvm_ipe", "link"),
+]:
+    grupos = con.sql(f"SELECT count(*) FROM (SELECT {colunas} FROM {tabela} "
+                     f"GROUP BY {colunas} HAVING count(*) > 1)").fetchall()[0][0]
+    print(f"  {tabela} ({colunas}): {grupos}")
+
+con.commit()
 con.close()
