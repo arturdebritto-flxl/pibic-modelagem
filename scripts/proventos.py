@@ -13,9 +13,9 @@ from pathlib import Path
 
 import duckdb
 
-# Fase 3 (proventos) — proventos em dinheiro da B3 (D19) para todo o universo,
-# tabela `proventos_b3`: uma linha por registro devolvido pela B3, sem remover
-# nem somar nada. Condições da aprovação do Portão 3a (16/11/2026):
+# Fase 3 (proventos) — proventos em dinheiro da B3 (D19) para o universo e, desde a
+# rodada 2, para os sucessores propostos em saidas.csv (coluna `escopo`). Tabela
+# `proventos_b3`: uma linha por registro devolvido pela B3, sem remover nem somar nada. Condições da aprovação do Portão 3a (16/11/2026):
 #   1. coluna `pareamento` com a marca do COTAHIST na data ex inferida;
 #   2. listas de pendências (marca sem provento; empresa sem registros);
 #   3. nome que devolve zero: tentar sem "/" e sem pontuação, registrando a variante;
@@ -29,10 +29,16 @@ ANO_MIN, ANO_MAX = 2010, 2026
 JANELA_PREGOES = 5
 PAUSA_S = 3
 PIORES = 20
+G = "DISTINCT (ticker, data_ex, tipo_provento)"  # grupo da condição 4
 AGENTE = "Mozilla/5.0 (X11; Linux x86_64) pesquisa-academica-PIBIC-UnB"
 B3 = "https://sistemaswebb3-listados.b3.com.br/listedCompaniesProxy/CompanyCall"
 PASTA = Path("dados/brutos/b3_proventos")
 PENDENCIAS = Path("resultados/fase3_pendencias_marcas.csv")
+SAIDAS = Path("dados/manuais/saidas.csv")
+# Ampliação aos sucessores: colunas que dependem do ticker pareado e número de linhas antigas
+# sem ticker que passam a ter ticker de sucessor (aceito pelo responsável em 17/11/2026)
+DERIVADAS_DO_TICKER = ["ticker", "repetido_entre_consultas", "marca_no_dia", "pareamento", "escopo"]
+GANHAM_TICKER_ESPERADO = 40
 # Consultas já baixadas na Fase 2 e no Portão 3a (arquivos nomeados pela raiz do ticker)
 JA_BAIXADOS = {
     "PETROBRAS": "dados/brutos/b3_teste/proventos_PETR", "VALE": "dados/brutos/b3_teste/proventos_VALE",
@@ -65,13 +71,21 @@ def data_iso(texto):
     return f"{texto[6:10]}-{texto[3:5]}-{texto[:2]}" if texto and len(texto) >= 10 else ""
 
 
-# 1. Nomes de pregão que os tickers do universo tiveram no COTAHIST
+# 1. Escopo (rodada 2): tickers do universo e sucessores propostos em saidas.csv.
+#    Nomes de pregão do COTAHIST: os do universo primeiro, na ordem de antes (id_registro
+#    das linhas antigas não muda); depois os nomes novos dos sucessores
+with open(SAIDAS, newline="") as arq:
+    sucessores = sorted({t.strip() for r in csv.DictReader(arq) for t in re.split(r"[+,]", r["sucessor"]) if t.strip()})
 with duckdb.connect("dados/pibic.duckdb", read_only=True) as con:
-    nomes = [r[0] for r in con.sql("""
-        SELECT DISTINCT nome FROM acoes
-        WHERE ticker IN (SELECT ticker FROM universo_mensal) ORDER BY nome
-    """).fetchall()]
-print(len(nomes), "nomes de pregão a consultar")
+    universo = {r[0] for r in con.sql("SELECT DISTINCT ticker FROM universo_mensal").fetchall()}
+    escopo = sorted(universo) + [t for t in sucessores if t not in universo]
+    nomes_ticker = con.sql("SELECT DISTINCT ticker, nome FROM acoes WHERE list_contains(?, ticker)",
+                           params=[escopo]).fetchall()
+nomes_universo = sorted({n for t, n in nomes_ticker if t in universo})
+nomes = nomes_universo + sorted({n for t, n in nomes_ticker} - set(nomes_universo))
+print(len(nomes), "nomes de pregão a consultar:", len(nomes_universo), "do universo,",
+      len(nomes) - len(nomes_universo), "só de sucessores")
+print("Sucessores fora do universo:", [t for t in escopo if t not in universo])
 
 # 2. Download: todas as páginas de cada nome. Nome que devolve zero: tenta sem "/"
 #    e depois sem pontuação. A variante usada fica em cada registro
@@ -99,7 +113,7 @@ for nome in nomes:
             pagina += 1
         if lidos != dados["page"]["totalRecords"]:
             raise ValueError(f"{consultado}: {lidos} registros lidos, {dados['page']['totalRecords']} declarados")
-        consultas.append((nome, consultado, tentativa, lidos))
+        consultas.append((nome, consultado, tentativa, lidos, "universo" if nome in nomes_universo else "sucessor"))
         if lidos:
             break
 
@@ -118,8 +132,10 @@ with open(tmp / "registros.csv", "w", newline="") as arq:
 
 con = duckdb.connect("dados/pibic.duckdb")
 con.begin()
-con.sql("CREATE TEMP TABLE consultas (nome_cotahist VARCHAR, nome_consultado VARCHAR, tentativa INTEGER, registros INTEGER)")
-con.executemany("INSERT INTO consultas VALUES (?, ?, ?, ?)", consultas)
+con.sql("CREATE TEMP TABLE consultas (nome_cotahist VARCHAR, nome_consultado VARCHAR, tentativa INTEGER, registros INTEGER, escopo VARCHAR)")
+con.executemany("INSERT INTO consultas VALUES (?, ?, ?, ?, ?)", consultas)
+con.sql("CREATE TEMP TABLE escopo (ticker VARCHAR, escopo VARCHAR)")
+con.executemany("INSERT INTO escopo VALUES (?, ?)", [(t, "universo" if t in universo else "sucessor") for t in escopo])
 con.sql(f"""
     CREATE TEMP TABLE bruto AS
     SELECT * FROM read_csv('{tmp}/registros.csv', header = false, columns = {{
@@ -128,13 +144,13 @@ con.sql(f"""
         'valor': 'DOUBLE', 'repetido': 'BOOLEAN', 'repeticao': 'INTEGER'}})
 """)
 
-print("\nConsultas: nomes resolvidos por variante e nomes sem nenhum registro")
+print("\nConsultas: nomes resolvidos por variante e nomes sem nenhum registro (nomes do universo × só de sucessores)")
 con.sql("""
-    SELECT count(DISTINCT nome_cotahist) AS nomes,
+    SELECT escopo, count(DISTINCT nome_cotahist) AS nomes,
            count(*) FILTER (WHERE registros > 0 AND tentativa = 1) AS com_o_nome_do_cotahist,
            count(*) FILTER (WHERE registros > 0 AND tentativa > 1) AS com_variante,
            count(DISTINCT nome_cotahist) - count(*) FILTER (WHERE registros > 0) AS sem_registros
-    FROM consultas
+    FROM consultas GROUP BY escopo ORDER BY escopo DESC
 """).show()
 con.sql("""
     SELECT nome_cotahist, string_agg(nome_consultado || ' -> ' || registros, ' | ' ORDER BY tentativa) AS tentativas
@@ -164,13 +180,13 @@ con.sql(f"""
 # 5. Tickers do universo: nomes que tiveram, período na base e classe (`tipo`) do COTAHIST
 con.sql("""
     CREATE TEMP TABLE tickers_nome AS
-    SELECT DISTINCT ticker, nome FROM acoes WHERE ticker IN (SELECT ticker FROM universo_mensal)
+    SELECT DISTINCT ticker, nome FROM acoes WHERE ticker IN (SELECT ticker FROM escopo)
 """)
 con.sql("""
     CREATE TEMP TABLE periodo AS
     SELECT ticker, min(data) AS primeiro, max(data) AS ultimo, count(DISTINCT tipo) AS n_tipos,
-           any_value(tipo) AS tipo, bool_or(eh_unit) AS eh_unit
-    FROM acoes WHERE ticker IN (SELECT ticker FROM universo_mensal) GROUP BY ticker
+           any_value(tipo) AS tipo, bool_or(eh_unit) AS eh_unit, any_value(e.escopo) AS escopo
+    FROM acoes JOIN escopo e USING (ticker) GROUP BY ticker
 """)
 
 # 6. Candidatos: registro do emissor (pelo nome) com data ex dentro do período do
@@ -196,7 +212,7 @@ con.sql("""
     SELECT a.ticker, a.data, p.n, coalesce(a.marca, '') AS marca,
            lag(coalesce(a.marca, '')) OVER w AS anterior
     FROM acoes a JOIN pregoes p USING (data)
-    WHERE a.ticker IN (SELECT ticker FROM universo_mensal)
+    WHERE a.ticker IN (SELECT ticker FROM escopo)
     WINDOW w AS (PARTITION BY a.ticker ORDER BY a.data)
 """)
 con.sql("""
@@ -220,6 +236,11 @@ con.sql("""
     SELECT letra, count(*) AS tickers FROM marcas WHERE tem AND anterior IS NULL GROUP BY letra ORDER BY letra
 """).show()
 
+# Linhas da execução anterior, para conferir que a ampliação do escopo só acrescenta
+existia = con.sql("SELECT count(*) FROM information_schema.tables WHERE table_name = 'proventos_b3'").fetchall()[0][0]
+if existia:
+    con.sql("CREATE TEMP TABLE antigas AS SELECT * FROM proventos_b3")
+
 # 9. Tabela final: uma linha por registro da B3 (e por ticker pareado, se houver).
 #    "Marca do tipo" = marca de evento (começa com E) que contém a letra do tipo (D ou J)
 con.sql("""
@@ -235,11 +256,13 @@ con.sql("""
                 WHEN r.letra IS NULL OR NOT ml.tem      THEN 'outra_marca'
                 WHEN NOT ml.inicio                      THEN 'marca_vigente'
                 WHEN m.marca = 'E' || r.letra           THEN 'inicio_exato'
-                ELSE 'inicio_composto' END AS pareamento
+                ELSE 'inicio_composto' END AS pareamento,
+           e.escopo
     FROM registros r
     LEFT JOIN pares p USING (id_registro)
     LEFT JOIN marcas_dia m ON m.ticker = p.ticker AND m.data = r.data_ex
     LEFT JOIN marcas ml ON ml.ticker = p.ticker AND ml.data = r.data_ex AND ml.letra = r.letra
+    LEFT JOIN escopo e ON e.ticker = p.ticker
     WINDOW g AS (PARTITION BY p.ticker, r.classe_b3, r.tipo_b3, r.data_com, r.valor)
     ORDER BY r.id_registro, p.ticker
 """)
@@ -253,16 +276,54 @@ linhas, chaves, n_registros, sem_data, sem_valor, negativos = con.sql("""
 """).fetchall()[0]
 print(f"Checagem 1: linhas={linhas} chaves(id_registro, ticker)={chaves} registros_b3={n_registros} "
       f"lidos={len(registros)} sem_data_com={sem_data} sem_valor={sem_valor} valor_negativo={negativos}")
-if linhas != chaves or n_registros != len(registros) or negativos:
-    raise ValueError("proventos_b3: chave repetida, registro perdido ou valor negativo")
 print("  registros com mais de um ticker pareado:", linhas - n_registros)
+# Ticker vazio é permitido; data com ou valor vazio, valor negativo e registro com mais de um ticker, não
+if linhas != chaves or n_registros != len(registros) or negativos or sem_data or sem_valor or linhas != n_registros:
+    raise ValueError("proventos_b3: chave repetida, registro perdido, data com ou valor vazio, "
+                     "valor negativo ou registro pareado com mais de um ticker")
+# Checagem da ampliação do escopo (rodada 2, resposta do responsável): linha antiga com
+# ticker fica idêntica; linha antiga sem ticker só pode ganhar ticker de sucessor, mudando
+# apenas as colunas derivadas do ticker; nenhuma linha antiga removida
+if existia:
+    colunas_antigas = con.sql("SELECT * FROM antigas").columns
+    derivadas = [c for c in DERIVADAS_DO_TICKER if c in colunas_antigas]
+    fixas = ", ".join(c for c in colunas_antigas if c not in DERIVADAS_DO_TICKER)
+    todas = ", ".join(colunas_antigas)
+    print("Colunas derivadas do ticker (podem mudar quando a linha ganha ticker):", ", ".join(DERIVADAS_DO_TICKER))
+    # passagem da tabela da Parte 0 (sem `escopo`) para a ampliada: 40 linhas esperadas; depois, nenhuma
+    esperado = GANHAM_TICKER_ESPERADO if "escopo" not in colunas_antigas else 0
+    n_antigas, com_ticker_alteradas, removidas, sem_ticker_alteradas, ganharam, ganharam_fora = con.sql(f"""
+        WITH novas AS (SELECT * FROM proventos_b3 WHERE id_registro IN (SELECT id_registro FROM antigas))
+        SELECT (SELECT count(*) FROM antigas),
+               (SELECT count(*) FROM (SELECT {todas} FROM antigas WHERE ticker IS NOT NULL
+                                      EXCEPT ALL SELECT {todas} FROM novas)),
+               (SELECT count(*) FROM antigas a WHERE a.id_registro NOT IN (SELECT id_registro FROM novas)),
+               (SELECT count(*) FROM (SELECT {fixas} FROM antigas WHERE ticker IS NULL
+                                      EXCEPT ALL SELECT {fixas} FROM novas
+                                      WHERE id_registro IN (SELECT id_registro FROM antigas WHERE ticker IS NULL))),
+               (SELECT count(*) FROM novas WHERE ticker IS NOT NULL
+                  AND id_registro IN (SELECT id_registro FROM antigas WHERE ticker IS NULL)),
+               (SELECT count(*) FROM novas WHERE ticker IS NOT NULL AND escopo IS DISTINCT FROM 'sucessor'
+                  AND id_registro IN (SELECT id_registro FROM antigas WHERE ticker IS NULL))
+    """).fetchall()[0]
+    print(f"Linhas da execução anterior: {n_antigas}; com ticker alteradas: {com_ticker_alteradas}; "
+          f"removidas: {removidas}; sem ticker com coluna não derivada alterada: {sem_ticker_alteradas}; "
+          f"ganharam ticker: {ganharam} (esperado {esperado}), das quais fora do escopo 'sucessor': {ganharam_fora}")
+    if com_ticker_alteradas or removidas or sem_ticker_alteradas or ganharam_fora or ganharam != esperado:
+        raise ValueError("proventos_b3: mudança em linha da execução anterior fora do permitido")
+    print("Linhas antigas sem ticker que ganharam ticker de sucessor")
+    con.sql("""
+        SELECT n.nome_consultado, n.classe_b3, n.tipo_b3, n.data_com, n.valor, n.ticker AS ticker_novo, n.pareamento
+        FROM proventos_b3 n JOIN antigas a USING (id_registro)
+        WHERE a.ticker IS NULL AND n.ticker IS NOT NULL ORDER BY n.ticker, n.data_com, n.id_registro
+    """).show(max_rows=100, max_width=200)
 con.sql("""
-    SELECT count(*) AS linhas, count(ticker) AS com_ticker, count(DISTINCT ticker) AS tickers,
+    SELECT escopo, count(*) AS linhas, count(ticker) AS com_ticker, count(DISTINCT ticker) AS tickers,
            count(DISTINCT nome_cotahist) AS nomes, min(data_com) AS com_min, max(data_com) AS com_max,
            min(valor) AS valor_min, max(valor) AS valor_max,
            count(*) FILTER (WHERE repetido) AS repetidos,
            count(*) FILTER (WHERE repetido_entre_consultas) AS repetidos_entre_consultas
-    FROM proventos_b3
+    FROM proventos_b3 GROUP BY escopo ORDER BY escopo DESC NULLS LAST
 """).show(max_width=250)
 
 print("Checagem 2: tipo da B3 × classe da B3 (linhas com e sem ticker)")
@@ -288,8 +349,8 @@ con.sql(f"""
 # Condição 1 — pareamento
 print("Condição 1 — pareamento com a marca do COTAHIST, por tipo de provento (linhas com ticker)")
 con.sql("""
-    PIVOT (SELECT tipo_provento, pareamento FROM proventos_b3 WHERE ticker IS NOT NULL)
-    ON pareamento USING count(*) GROUP BY tipo_provento ORDER BY tipo_provento
+    PIVOT (SELECT escopo, tipo_provento, pareamento FROM proventos_b3 WHERE ticker IS NOT NULL)
+    ON pareamento USING count(*) GROUP BY escopo, tipo_provento ORDER BY escopo DESC, tipo_provento
 """).show(max_width=250)
 print("Marca no dia × tipo de provento (linhas com ticker e pregão no dia)")
 con.sql("""
@@ -339,8 +400,8 @@ con.sql("""
 """)
 con.sql("""
     CREATE TEMP TABLE por_ticker AS
-    SELECT p.ticker, p.tipo,
-           (SELECT string_agg(DISTINCT nome, ' | ') FROM tickers_nome t WHERE t.ticker = p.ticker) AS nomes,
+    SELECT p.ticker, p.tipo, p.escopo,
+           (SELECT string_agg(DISTINCT nome, ' | ' ORDER BY nome) FROM tickers_nome t WHERE t.ticker = p.ticker) AS nomes,
            (SELECT count(*) FROM marcas m WHERE m.ticker = p.ticker AND m.inicio) AS inicios_marca_dj,
            (SELECT coalesce(sum(c.registros), 0) FROM consultas c JOIN tickers_nome t ON t.nome = c.nome_cotahist
              WHERE t.ticker = p.ticker) AS registros_b3_dos_nomes,
@@ -349,18 +410,18 @@ con.sql("""
 """)
 print("Condição 2b — empresa com marcas D/J no COTAHIST e zero registros na B3 (todas as variantes do nome)")
 con.sql("""
-    SELECT ticker, tipo, nomes, inicios_marca_dj FROM por_ticker
-    WHERE inicios_marca_dj > 0 AND registros_b3_dos_nomes = 0 ORDER BY ticker
+    SELECT escopo, ticker, tipo, nomes, inicios_marca_dj FROM por_ticker
+    WHERE inicios_marca_dj > 0 AND registros_b3_dos_nomes = 0 ORDER BY escopo DESC, ticker
 """).show(max_rows=300, max_width=200)
 print("Tickers com marcas D/J, registros na B3 para o nome, mas nenhuma linha pareada (classe ou período)")
 con.sql("""
-    SELECT ticker, tipo, nomes, inicios_marca_dj, registros_b3_dos_nomes FROM por_ticker
-    WHERE inicios_marca_dj > 0 AND registros_b3_dos_nomes > 0 AND linhas_pareadas = 0 ORDER BY ticker
+    SELECT escopo, ticker, tipo, nomes, inicios_marca_dj, registros_b3_dos_nomes FROM por_ticker
+    WHERE inicios_marca_dj > 0 AND registros_b3_dos_nomes > 0 AND linhas_pareadas = 0 ORDER BY escopo DESC, ticker
 """).show(max_rows=300, max_width=200)
 
 con.sql(f"""
     CREATE TEMP TABLE lacunas AS
-    SELECT m.ticker, m.data, m.marca, m.anterior AS marca_anterior, m.letra,
+    SELECT m.ticker, m.data, m.marca, m.anterior AS marca_anterior, m.letra, t.escopo,
            EXISTS (SELECT 1 FROM pareados v WHERE v.ticker = m.ticker
                      AND abs(v.n - m.n) <= {JANELA_PREGOES}) AS outro_tipo_em_ate_5_pregoes,
            t.registros_b3_dos_nomes = 0 AS empresa_sem_registros_na_b3,
@@ -374,56 +435,60 @@ con.sql(f"COPY (SELECT * FROM lacunas ORDER BY ticker, data, letra) TO '{PENDENC
 print(f"Condição 2a — início de marca D ou J sem provento do mesmo tipo em até {JANELA_PREGOES} pregões "
       f"(lista em {PENDENCIAS})")
 con.sql(f"""
-    SELECT (SELECT count(*) FROM marcas m WHERE m.inicio AND year(m.data) BETWEEN {ANO_MIN} AND {ANO_MAX}) AS inicios_de_marca,
-           count(*) AS pendentes, count(DISTINCT ticker) AS tickers,
+    SELECT e.escopo,
+           (SELECT count(*) FROM marcas m JOIN periodo p USING (ticker)
+             WHERE m.inicio AND year(m.data) BETWEEN {ANO_MIN} AND {ANO_MAX} AND p.escopo = e.escopo) AS inicios_de_marca,
+           count(l.ticker) AS pendentes, count(DISTINCT ticker) AS tickers,
            count(*) FILTER (WHERE empresa_sem_registros_na_b3) AS de_empresa_sem_registros,
            count(*) FILTER (WHERE ticker_sem_linha_pareada AND NOT empresa_sem_registros_na_b3)
                AS de_ticker_sem_linha_pareada,
            count(*) FILTER (WHERE NOT ticker_sem_linha_pareada) AS de_ticker_com_proventos,
            count(*) FILTER (WHERE NOT ticker_sem_linha_pareada AND outro_tipo_em_ate_5_pregoes)
                AS dessas_com_outro_tipo_perto
-    FROM lacunas
+    FROM (SELECT DISTINCT escopo FROM periodo) e LEFT JOIN lacunas l USING (escopo)
+    GROUP BY e.escopo ORDER BY e.escopo DESC
 """).show(max_width=250)
 print("Pendentes por ano (só tickers com proventos pareados)")
 con.sql("""
-    SELECT year(data) AS ano, count(*) AS pendentes, count(DISTINCT ticker) AS tickers
-    FROM lacunas WHERE NOT ticker_sem_linha_pareada GROUP BY ano ORDER BY ano
+    SELECT escopo, year(data) AS ano, count(*) AS pendentes, count(DISTINCT ticker) AS tickers
+    FROM lacunas WHERE NOT ticker_sem_linha_pareada GROUP BY ALL ORDER BY escopo DESC, ano
 """).show(max_rows=30)
 
 # Condição 4 — taxa de coincidência por empresa (raiz do ticker) e por nome consultado,
-# em grupos ticker / data ex / tipo de dividendos e JCP com pregão no dia
-for tabela, chave, outra in (("taxas", "left(ticker, 4) AS empresa", "string_agg(DISTINCT nome_consultado, ' | ') AS nomes_consultados"),
+# em grupos ticker / data ex / tipo de dividendos e JCP com pregão no dia. Grupo contado
+# uma vez mesmo que venha de dois nomes consultados (a categoria é a mesma nas cópias)
+for tabela, chave, outra in (("taxas", "escopo, left(ticker, 4) AS empresa", "string_agg(DISTINCT nome_consultado, ' | ' ORDER BY nome_consultado) AS nomes_consultados"),
                              ("taxas_nome", "nome_consultado", "string_agg(DISTINCT ticker, ' ' ORDER BY ticker) AS tickers")):
     con.sql(f"""
     CREATE TEMP TABLE {tabela} AS
     SELECT {chave}, {outra},
-           count(*) AS grupos,
-           count(*) FILTER (WHERE pareamento = 'inicio_exato')    AS inicio_exato,
-           count(*) FILTER (WHERE pareamento = 'inicio_composto') AS inicio_composto,
-           count(*) FILTER (WHERE pareamento = 'marca_vigente')   AS marca_vigente,
-           count(*) FILTER (WHERE pareamento = 'outra_marca')     AS outra_marca,
-           count(*) FILTER (WHERE pareamento = 'sem_marca')       AS sem_marca,
-           round(count(*) FILTER (WHERE pareamento LIKE 'inicio%') / count(*), 3) AS taxa_inicio,
-           round(count(*) FILTER (WHERE pareamento IN ('inicio_exato', 'inicio_composto', 'marca_vigente'))
-                 / count(*), 3) AS taxa_com_vigente
-    FROM (SELECT DISTINCT ticker, data_ex, tipo_provento, pareamento, nome_consultado FROM proventos_b3
+           count({G}) AS grupos,
+           count({G}) FILTER (WHERE pareamento = 'inicio_exato')    AS inicio_exato,
+           count({G}) FILTER (WHERE pareamento = 'inicio_composto') AS inicio_composto,
+           count({G}) FILTER (WHERE pareamento = 'marca_vigente')   AS marca_vigente,
+           count({G}) FILTER (WHERE pareamento = 'outra_marca')     AS outra_marca,
+           count({G}) FILTER (WHERE pareamento = 'sem_marca')       AS sem_marca,
+           round(count({G}) FILTER (WHERE pareamento LIKE 'inicio%') / count({G}), 3) AS taxa_inicio,
+           round(count({G}) FILTER (WHERE pareamento IN ('inicio_exato', 'inicio_composto', 'marca_vigente'))
+                 / count({G}), 3) AS taxa_com_vigente
+    FROM (SELECT DISTINCT ticker, data_ex, tipo_provento, pareamento, nome_consultado, escopo FROM proventos_b3
           WHERE ticker IS NOT NULL AND tipo_provento <> 'outro' AND pareamento <> 'nao_comparavel')
     GROUP BY ALL
 """)
 print(f"Condição 4 — as {PIORES} piores taxas de coincidência por empresa (taxa_inicio = início exato ou composto)")
-con.sql(f"SELECT * FROM taxas ORDER BY taxa_inicio, grupos DESC LIMIT {PIORES}").show(max_width=250)
+con.sql(f"SELECT * FROM taxas ORDER BY taxa_inicio, grupos DESC, empresa, escopo LIMIT {PIORES}").show(max_width=250)
 print("Distribuição da taxa_inicio entre as empresas")
 con.sql("""
-    SELECT count(*) AS empresas, sum(grupos) AS grupos, min(taxa_inicio) AS minimo,
+    SELECT escopo, count(*) AS empresas, sum(grupos) AS grupos, min(taxa_inicio) AS minimo,
            quantile_cont(taxa_inicio, 0.1) AS p10, median(taxa_inicio) AS mediana, max(taxa_inicio) AS maximo,
            count(*) FILTER (WHERE taxa_inicio < 0.5) AS abaixo_de_50, count(*) FILTER (WHERE taxa_inicio < 0.8) AS abaixo_de_80,
            round(sum(inicio_exato + inicio_composto) / sum(grupos), 3) AS taxa_geral
-    FROM taxas
+    FROM taxas GROUP BY escopo ORDER BY escopo DESC
 """).show(max_width=250)
 print("Todas as empresas")
-con.sql("SELECT * FROM taxas ORDER BY empresa").show(max_rows=400, max_width=250)
+con.sql("SELECT * FROM taxas ORDER BY escopo DESC, empresa").show(max_rows=400, max_width=250)
 print(f"Condição 4 — as {PIORES} piores taxas de coincidência por nome consultado")
-con.sql(f"SELECT * FROM taxas_nome ORDER BY taxa_inicio, grupos DESC LIMIT {PIORES}").show(max_width=250)
+con.sql(f"SELECT * FROM taxas_nome ORDER BY taxa_inicio, grupos DESC, nome_consultado LIMIT {PIORES}").show(max_width=250)
 print("Todos os nomes consultados")
 con.sql("SELECT * FROM taxas_nome ORDER BY nome_consultado").show(max_rows=400, max_width=250)
 
@@ -433,11 +498,11 @@ con.sql("""
     SELECT nome_consultado, count(DISTINCT id_registro) FILTER (WHERE repeticao = 1) AS grupos_repetidos,
            count(DISTINCT id_registro) FILTER (WHERE repeticao > 1) AS excedentes,
            min(data_com) AS com_min, max(data_com) AS com_max
-    FROM proventos_b3 WHERE repetido GROUP BY nome_consultado ORDER BY excedentes DESC
+    FROM proventos_b3 WHERE repetido GROUP BY nome_consultado ORDER BY excedentes DESC, nome_consultado
 """).show(max_rows=300)
 print("Registros iguais vindos de consultas por nomes diferentes (`repetido_entre_consultas`)")
 con.sql("""
-    SELECT ticker, count(*) AS linhas, string_agg(DISTINCT nome_consultado, ' | ') AS nomes
+    SELECT ticker, count(*) AS linhas, string_agg(DISTINCT nome_consultado, ' | ' ORDER BY nome_consultado) AS nomes
     FROM proventos_b3 WHERE repetido_entre_consultas GROUP BY ticker ORDER BY ticker
 """).show(max_rows=100, max_width=200)
 
