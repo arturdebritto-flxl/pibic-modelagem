@@ -16,3 +16,9 @@ CLAUDE.md
 .agentes/
 .codegraph/
 openwiki/
+resultados/
+notas/
+scripts/explora_*.py
+scripts/confere_*.py
+scripts/corrige_saidas_fase1.py
+scripts/dossie_saidas.py
